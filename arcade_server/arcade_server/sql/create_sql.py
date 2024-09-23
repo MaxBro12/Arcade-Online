@@ -1,7 +1,12 @@
 import sqlite3
 from core.debug import create_log
 from core.filemanage import delete_file
-from settings import SQL_DATABASE_NAME, SQL_CREATE_BANS_DATABASE
+from settings import (
+    SQL_DATABASE_NAME,
+    SQL_CREATE_TABLE_USERS,
+    SQL_CREATE_TABLE_CHARS,
+    SQL_CREATE_TABLE_USER_CHARS,
+)
 
 
 def create_bd():
@@ -10,7 +15,9 @@ def create_bd():
             cursor = db.cursor()
             
             # ! Все таблицы которые нужно создать
-            cursor.execute(SQL_CREATE_BANS_DATABASE)
+            cursor.execute(SQL_CREATE_TABLE_USERS)
+            cursor.execute(SQL_CREATE_TABLE_CHARS)
+            cursor.execute(SQL_CREATE_TABLE_USER_CHARS)
             
             db.commit()
             cursor.close()

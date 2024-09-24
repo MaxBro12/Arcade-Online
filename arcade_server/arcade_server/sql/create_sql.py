@@ -17,7 +17,7 @@ def create_bd():
             # ! Все таблицы которые нужно создать
             cursor.execute(SQL_CREATE_TABLE_USERS)
             cursor.execute(SQL_CREATE_TABLE_CHARS)
-            cursor.execute(SQL_CREATE_TABLE_USER_CHARS)
+            #cursor.execute(SQL_CREATE_TABLE_USER_CHARS)
             
             db.commit()
             cursor.close()

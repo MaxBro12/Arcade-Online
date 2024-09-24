@@ -1,6 +1,6 @@
 from os import listdir, remove
 from os.path import join, exists, splitext
-from core import create_log
+from ..debug import create_log
 import time
 
 from settings import MAX_FILE_DELETE_TRIES

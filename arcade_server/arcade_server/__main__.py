@@ -4,21 +4,24 @@ from os.path import exists
 
 from core.debug import create_log
 from sql.create_sql import create_bd
+from sql.users_query import sql_get_user_by_name
 
 from settings import FOLDER_FILES, SQL_DATABASE_NAME
 
 import falcon
 import falcon.asgi
 import gunicorn
+import uvicorn
 
 
 class QuoteResource:
-    async def get(self, req, resp):
+    async def on_get(self, req: falcon.Request, resp: falcon.Response):
         quote = {
-            'test': 'ыыыы'
+            'user': await sql_get_user_by_name(req.params.get('username'), req.params.get('passwod'))
         }
 
-        resp.media = quote
+        resp.data = quote
+        resp.status = falcon.HTTP_200
 
 
 def check_files():
@@ -29,9 +32,10 @@ def check_files():
         create_log('Making SQL', 'info')
         create_bd()
 
+    app = falcon.asgi.App()
+    app.add_route('/test', QuoteResource())
 
-app = falcon.asgi.App()
-app.add_route('/test', QuoteResource())
+    uvicorn.run(app)
 
 
 def main(args: list):

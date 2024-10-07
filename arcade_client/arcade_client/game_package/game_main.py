@@ -4,7 +4,7 @@ from core.debug import create_log
 
 class Game:
     def __init__(self):
-        
+
         # ! Server
         self.server = Server()
         st = self.server.status()

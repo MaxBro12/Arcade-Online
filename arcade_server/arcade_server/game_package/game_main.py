@@ -2,38 +2,9 @@ from time import time, sleep
 import uvicorn
 from fastapi import FastAPI, APIRouter
 from threading import Thread
-
-"""
-queue = Queue()
-router = APIRouter()
+from core.dot_env import get_env
 
 
-
-
-game = Game()
-queue.put(game)
-
-@router.get('/test')
-async def server_get_status():
-    game = queue.get()
-    return {'msg': game.tick}
-
-
-app = FastAPI(title='Game Server')
-app.include_router(router)
-
-class Server:
-    def __init__(self) -> None:
-        #self.server_proc = Process(name='game server', target=self.server, args=(queue,))
-        #self.server_proc.start()
-        #print('>>>>', self.server_proc.pid)
-        #game.run()
-        self.server()
-
-    def server(self):
-        uvicorn.run(app)
-
-"""
 class Game:
     def __init__(self) -> None:
         self.tick = 0
@@ -64,7 +35,10 @@ class Server:
         #self.server_proc.join()
 
     def server(self):
-        uvicorn.run(self.app)
+        uvicorn.run(
+            self.app,
+            port = int(get_env('port'))
+        )
 
     async def server_get_status(self):
         return {

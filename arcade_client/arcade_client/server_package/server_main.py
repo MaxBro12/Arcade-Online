@@ -8,11 +8,10 @@ class Server:
     def __init__(self):
         self.host = get_env('API_REQ')
 
-    @staticmethod
-    def status() -> ServerStatus:
+    def status(self) -> ServerStatus:
         st = time()
         req =  requests.get(
-            'http://127.0.0.1:8000/status'
+            f'{self.host}/status'
         ).json()
         return ServerStatus(
             status=req['status'],

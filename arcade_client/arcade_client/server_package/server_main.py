@@ -2,6 +2,7 @@ from time import time
 import requests
 from core.dot_env import get_env
 from .server_dataclass import ServerStatus
+from .requests_maker import make_get_request
 
 
 class Server:
@@ -10,11 +11,11 @@ class Server:
 
     def status(self) -> ServerStatus:
         st = time()
-        req =  requests.get(
-            f'{self.host}/status'
-        ).json()
-        return ServerStatus(
-            status=req['status'],
-            server_time=req['server_time'],
-            ping=int((time() - st) / 1000)
-        )
+        req =  make_get_request(f'{self.host}/status')
+        if req is not None:
+            return ServerStatus(
+                status=req.json['status'],
+                server_time=req.json['server_time'],
+                ping=int((time() - st) / 1000)
+            )
+        return ServerStatus(status='OFFLINE',server_time=0,ping=0)

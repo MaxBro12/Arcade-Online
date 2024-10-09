@@ -1,3 +1,4 @@
+from ctypes import resize
 from typing import Final
 from dataclasses import dataclass
 
@@ -14,16 +15,19 @@ ENV_FILE: Final = '.env'
 FOLDER_FILES: Final = 'data'
 MAX_FILE_DELETE_TRIES: Final = 100
 
+SETTINGS_FILE: Final = f'{FOLDER_FILES}/settings.toml'
 
 # ! Классы настроек
 @dataclass
 class Window:
     width: int = 600
     height: int = 400
-    max_fps: int | None = 30
+    resizeable: bool = True
+    fullscreen: bool = False
     vsync: bool = True
+    max_fps: int | None = 30
 
 # ! Toml-settings
 @dataclass
 class GameSettings:
-    window = Window()
+    window: Window

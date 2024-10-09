@@ -28,7 +28,7 @@ class Server:
 
         self.game = Game()
 
-        self.server_proc = Thread(name='game server', target=self.server)
+        self.server_proc = Thread(name='game server', target=self.server, daemon=True)
         self.server_proc.start()
 
         self.game.run()

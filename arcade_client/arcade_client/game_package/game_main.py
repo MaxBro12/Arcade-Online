@@ -1,7 +1,8 @@
 import arcade
-from server_package import Server
+from client_package import Client
 from core.debug import create_log
 from core.settings_toml import load_settings, save_settings
+from time import time
 
 
 class Game(arcade.Window):
@@ -10,9 +11,8 @@ class Game(arcade.Window):
         self.settings = load_settings()
 
         # ! Server
-        self.server = Server()
-        st = self.server.status()
-        create_log(f'status: {st.status} ping: {st.ping}')
+        self.server = Client()
+        create_log(f'status: {self.server.status.status} ping: {self.server.status.ping}')
 
         # ! Arcade
         super().__init__(
@@ -34,3 +34,12 @@ class Game(arcade.Window):
 
         self.clear()
         # Code to draw the screen goes here
+        print(self.server.status)
+        arcade.draw_text(
+            f"Server: {self.server.status.status} Ping: {self.server.status.ping}",
+            self.settings.window.width / 2,
+            self.settings.window.height / 2,
+            arcade.color.WHITE,
+            30,
+            anchor_x="right"
+        )

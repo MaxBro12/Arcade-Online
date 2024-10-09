@@ -1,7 +1,6 @@
 import requests
-
 from core.debug import create_log
-from .server_dataclass import ResponseData
+from .client_dataclass import ResponseData
 
 
 def make_get_request(

@@ -37,6 +37,7 @@ class Server:
     def server(self):
         uvicorn.run(
             self.app,
+            host = get_env('host'),
             port = int(get_env('port'))
         )
 

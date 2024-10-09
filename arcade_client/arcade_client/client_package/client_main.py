@@ -20,7 +20,7 @@ class Client:
                 self.status = ServerStatus(
                     status=req.json['status'],
                     server_time=req.json['server_time'],
-                    ping=int((time() - st) / 1000)
+                    ping=int((time() - st) * 1000)
                 )
             else:
                 self.status = ServerStatus(status='OFFLINE',server_time=0,ping=0)

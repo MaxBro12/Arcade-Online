@@ -1,6 +1,5 @@
 import arcade
 from client_package import Client
-from client_package.client_socket import ClientSocket
 from core.debug import create_log
 from core.settings_toml import load_settings, save_settings
 from time import time
@@ -12,7 +11,7 @@ class Game(arcade.Window):
         self.settings = load_settings()
 
         # ! Server
-        self.server = ClientSocket()
+        self.server = Client()
         create_log(f'status: {self.server.status.status} ping: {self.server.status.ping}')
 
         # ! Arcade

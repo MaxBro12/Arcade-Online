@@ -1,10 +1,10 @@
 import uvicorn
 from time import time
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, Request
 from threading import Thread
-from core.dot_env import get_env
+from .server_settings import SERVER_MAIN_PORT, SERVER_MAIN_HOST
 from game_package.game_main import Game
-
+from game_package.game_players import Player
 
 class Server:
     def __init__(self) -> None:
@@ -18,17 +18,15 @@ class Server:
 
         self.game = Game()
 
-        self.server_proc = Thread(name='game server', target=self.server, daemon=True)
-        self.server_proc.start()
+        Thread(name='game server', target=self.server, daemon=True).start()
 
         self.game.run()
-        #self.server_proc.join()
 
     def server(self):
         uvicorn.run(
             self.app,
-            host = get_env('host'),
-            port = int(get_env('port'))
+            host = SERVER_MAIN_HOST,
+            port = SERVER_MAIN_PORT
         )
 
     async def server_get_status(self):
@@ -36,3 +34,12 @@ class Server:
             'status': self.status,
             'server_time': time()
         }
+
+    async def authorize(self, request: Request):
+        params = request.json()
+        print(params)
+        self.game.players.append(
+            Player(
+                request.session
+            )
+        )

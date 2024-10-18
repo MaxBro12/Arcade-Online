@@ -1,9 +1,11 @@
 from time import sleep
+from .game_players import Player, Players
 
 
 class Game:
     def __init__(self) -> None:
         self.tick = 0
+        self.players = Players()
 
     def run(self):
         # ! Сначала грузимся и выполняем запуски
